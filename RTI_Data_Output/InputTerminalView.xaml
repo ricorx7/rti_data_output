@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="RTI.InputTerminalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Margin="5" >
+                <StackPanel Background="DarkGray" Margin="5" ToolTip="{Binding SerialOutputTooltip}">
+                    <TextBlock Text="ADCP Input" Margin="20" FontSize="20" Foreground="Black" />
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Margin="5" ItemsSource="{Binding CommPortList}" SelectedItem="{Binding SelectedCommPort}" />
+                        <Button Content="Scan" Command="{Binding ScanAdcpCommand}" Margin="5" />
+                    </StackPanel>
+                    <ComboBox Margin="5" ItemsSource="{Binding BaudRateList}" SelectedItem="{Binding SelectedBaud}" />
+                    <Button Content="Connect" Margin="5" Command="{Binding ConnectAdcpCommand}"  />
+                    <Button Content="Disconnect" Margin="5" Command="{Binding DisconnectAdcpCommand}"  />
+                </StackPanel>   
+        </Grid>
+        
+        <StackPanel Grid.Row="0" Grid.Column="2" Background="DarkGray" Margin="5" ToolTip="{Binding AdcpCommandsTooltip}">
+            <TextBlock Text="ADCP Commands" Margin="20" FontSize="20" Foreground="Black" />
+            <Button Content="Start Pinging" Margin="5, 5, 5, 5" Command="{Binding StartPingingCommand}"  />
+            <Button Content="Stop Pinging" Margin="5" Command="{Binding StopPingingCommand}"  />
+
+            <TextBox Text="{Binding SerialCmd}" Margin="5, 20, 5, 5" />
+            <Button Content="SEND" Margin="5" Command="{Binding SendAdcpCmdCommand}" />
+        </StackPanel>
+
+        <!--ScrollViewer Grid.Row="0" Grid.Column="1">
+            <TextBlock TextWrapping="Wrap" Margin="5" Text="{Binding SerialOutput}" Width="450" Height="250" />
+        </-->
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="ADCP Input" FontWeight="Bold" />
+
+            <ScrollViewer  Margin="5" Background="LightSteelBlue" Height="300" ToolTip="{Binding SerialOutputTooltip}">
+                <TextBlock TextWrapping="Wrap" Text="{Binding AdcpDecodedOutput}" />
+            </ScrollViewer>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="0" Margin="5" >
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Background="DarkGray" Margin="5" ToolTip="{Binding GpsOutputTooltip}">
+                    <TextBlock Text="GPS Input" Margin="20" FontSize="20" Foreground="Black" />
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Margin="5" ItemsSource="{Binding GpsCommPortList}" SelectedItem="{Binding SelectedGpsCommPort}" />
+                        <Button Content="Scan" Command="{Binding ScanAdcpCommand}" Margin="5" />
+                    </StackPanel>
+                    <ComboBox Margin="5" ItemsSource="{Binding BaudRateList}" SelectedItem="{Binding SelectedGpsBaud}" />
+                    <Button Content="Connect" Margin="5" Command="{Binding ConnectGpsCommand}"  />
+                    <Button Content="Disconnect" Margin="5" Command="{Binding DisconnectGpsCommand}"  />
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="GPS Input" FontWeight="Bold" />
+
+            <ScrollViewer  Margin="5" Background="LightSlateGray" Height="300" ToolTip="{Binding GpsOutputTooltip}">
+                <TextBlock TextWrapping="Wrap" Text="{Binding GpsOutput}"  />
+            </ScrollViewer>
+        </StackPanel>
+        
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <ScrollViewer  Margin="5" MinHeight="100">
+                <TextBlock TextWrapping="Wrap" Text="{Binding StatusOutput}"  />
+            </ScrollViewer>
+        </Grid>
+
+    </Grid>
+
+</UserControl>
